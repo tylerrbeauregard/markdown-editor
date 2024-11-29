@@ -1,0 +1,349 @@
+/* General Layout and Reset */
+html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Editor Styles */
+#editor {
+    font-size: 14pt;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.code-block-output {
+    font-size: 14pt;
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+/* Output Styles */
+#output {
+    font-size: 16pt;
+    font-family: "Computer Modern Serif", serif;
+    position: relative;
+    height: 100%;
+    padding: 1cm 10%;
+    overflow: auto;
+    text-align: justify;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+}
+
+#output a {
+    color: #809fff;
+}
+
+#output h1 {
+	background: #FFFB1D;
+	color: black;
+	padding-left: 20px;
+    border-radius: 5px;
+    text-align: left;
+}
+
+#output image {
+	
+}
+
+#output ol, ul {
+	margin: 0pt;
+}
+
+#output li::marker, ul::marker {
+  color: #FFFB1D;
+}
+
+#output hr {
+	color: #FFFB1D;
+	background-color: #FFFB1D;
+	border-color: #FFFB1D;
+}
+
+#output blockquote {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 2px;
+	padding-left: 30px;
+	border-left: 5px solid #FFFB1D;
+}
+
+#output code {
+	font-size: 14pt;
+	background-color: #002B36;
+	padding: 1px;
+}
+
+#output .highlight {
+  background-color: #FFFB1D;
+  color: black;
+  padding-left: 2px;
+  padding-right:2px;
+  border-radius: 2px;
+}
+
+#output table {
+    border-collapse:collapse;
+    width: 100%;
+    border-radius: 5px;
+}
+#output th, td {
+    border: 1px solid #504E4E;
+    padding: 8px;
+    text-align: left;
+}
+#output th {
+    background-color: #1C1C1C;
+    font-weight: bold;
+}
+
+#output .qed {
+	width: 100%;
+	font-size: 20pt;
+	text-align: right;
+	color: #FFFB1D;
+}
+
+#output img, image {
+	padding: 10px;
+}
+
+/* Wrapper and Box Styles */
+.wrapper {
+    width: auto;
+    height: 100%;
+    background-color: #fff;
+    color: #444;
+    display: flex; /* Flexbox for layout */
+    padding: 0;
+    z-index: 2;
+}
+
+.box {
+    box-sizing: border-box;
+    flex: 1 1 auto; /* Flexible and equally sized */
+    background-color: #222;
+    color: #aaa;
+    padding-top: 50px;
+}
+
+/* Handler (Resizable Divider) */
+.handler {
+    width: 15px;
+    background: #333;
+    padding: 0;
+    cursor: ew-resize;
+    flex: 0 0 auto;
+}
+
+.handler::before {
+    display: block;
+    width: 15px;
+    height: 100%;
+    background: #333;
+    margin: 0 auto;
+}
+
+/* Dragbar */
+.dragbar {
+    position: relative;
+    background: #111;
+    height: 20%;
+    width: 2px;
+    transform: translateY(-50%);
+    top: 50%;
+    left: 50%;
+    text-align: center;
+}
+
+/* Navbar */
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    z-index: 80;
+}
+
+.navbar .topel {
+	font-family: Arial, sans-serif;
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.navbar .topel:hover {
+    background: #FFFB1D;
+    color: black;
+    cursor: pointer;
+}
+
+.navbar .logo {
+	float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 5px;
+    height: 40px;
+}
+
+/* Custom Command Window */
+#customCommandWindow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    width: 60%;
+    max-width: 600px;
+    padding: 20px;
+    background: #222;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    color: #fff;
+    display: none; /* Initially hidden */
+    height: 400px;
+    overflow: hidden;
+}
+
+/* Command Window Table */
+#customCommandWindow table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#customCommandWindow th, #customCommandWindow td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+#customCommandWindow th {
+    background-color: #565656;
+}
+
+#customCommandWindow table tbody {
+    font-family: monospace;
+}
+
+/* Controls for Adding Items */
+#customCommandWindow .controls {
+    display: flex;
+    gap: 10px;
+}
+
+#customCommandWindow .controls input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: Courier, monospace;
+}
+
+#customCommandWindow .controls button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#customCommandWindow .controls button:hover {
+    background-color: #0056b3;
+}
+
+/* Command Window Close Button */
+#closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#closeButton:hover {
+    background-color: #d63030;
+}
+
+/* Command Window Scrollable Table Container */
+#customCommandWindow .table-container {
+    height: calc(100% - 100px); /* Leave space for controls */
+    overflow-y: auto; /* Add vertical scrolling */
+    margin-bottom: 10px;
+}
+
+/* Print Styles */
+@media print {
+    .navbar {
+        display: none;
+    }
+
+    body {
+        overflow: visible;
+        #fff;
+    }
+
+    .wrapper {
+        padding: 0;
+    }
+    
+    .code-block-output {
+		font-size: 14pt;
+		position: relative;
+		width: 100%;
+		height: auto;
+	}
+
+	.handler {
+		display: none;
+		visibility: hidden;
+	}
+
+	.dragbar {
+		display: none;
+		visibility: hidden;
+	}
+	
+	.box {
+		box-sizing: border-box;
+		flex: 1 1 auto; /* Flexible and equally sized */
+		background-color: white;
+		color: #aaa;
+		padding: 0;
+	}
+	
+	#output {
+		font-size: 12pt;
+		font-family: "Computer Modern Serif", serif;
+		position: relative;
+		height: 100%;
+		padding: 1cm 10%;
+		overflow: auto;
+		color: black;
+		background-color: white;
+	}	
+}
