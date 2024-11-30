@@ -740,3 +740,13 @@ output.style.height = webpageHeight - navbarHeight;
 loadFromCookies(editor);
 
 documentUpdate(editor, 'output');
+
+function loadExample() {
+	exampleLocation = "./example.md"
+	var client = new XMLHttpRequest();
+	client.open('GET', exampleLocation);
+	client.onreadystatechange = function() {
+		editor.setValue(client.responseText);
+	}
+	client.send();
+}
