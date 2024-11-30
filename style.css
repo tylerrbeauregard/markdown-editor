@@ -25,6 +25,7 @@ html, body {
 #output {
     font-size: 16pt;
     font-family: "Computer Modern Serif", serif;
+    color: white;
     position: relative;
     height: 100%;
     padding: 1cm 10%;
@@ -345,5 +346,9 @@ html, body {
 		overflow: auto;
 		color: black;
 		background-color: white;
-	}	
+	}
+
+	#output li::marker, ul::marker {
+	  	color: black;
+	}
 }
