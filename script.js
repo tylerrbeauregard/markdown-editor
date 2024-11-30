@@ -288,6 +288,40 @@ function parseMarkdown(markdown) {
 			return `<table><thead><tr>${headerHtml}</tr></thead><tbody>${bodyHtml}</tbody></table>`;
 		});
 	}
+
+        // Convert bold text
+    markdown = markdown.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
+
+    // Convert italic text
+    markdown = markdown.replace(/\*(.*?)\*/gim, '<em>$1</em>');
+
+    // Convert underlined text
+    markdown = markdown.replace(/__(.*?)__/gim, '<u>$1</u>');
+    
+    // Convert strikethrough text
+    markdown = markdown.replace(/~(.*?)~/gim, '<s>$1</s>');
+    
+    // Horizontal rule
+    markdown = markdown.replace(/^----* *$/gm, '<hr></hr>');
+    
+    // Highlight
+    markdown = markdown.replace(/==(?:\[(.*?)\])?(.*?)==/g, (match, color, text) => {
+		if (color) {
+			return `<span style="background-color:${color};">${text}</span>`;
+		} else {
+			return `<span class="highlight">${text}</span>`;
+    }});
+    
+    // Text-color
+    markdown = markdown.replace(/(?<!\<\!)--(?:\[(.*?)\])?(.*?)--/g, (match, color, text) => {
+		if (color) {
+			return `<span style="color:${color};">${text}</span>`;
+		} else {
+			return `<span>${text}</span>`;
+    }});
+
+    // Replaces \qed with a qed symbol
+    markdown = markdown.replace(/\\qed/g, "<div class='qed'>&#8718;</div>");
 	
 	// Unordered lists with indentation
 	{
@@ -366,61 +400,28 @@ function parseMarkdown(markdown) {
 		// Replace intermediary tags with standard <li> tags, preserving the value attribute
 		markdown = markdown.replace(/<li_ord(.*?)>/g, '<li$1>').replace(/<\/li_ord>/g, '</li>');
 	}
-   
-    // Convert bold text
-    markdown = markdown.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
-
-    // Convert italic text
-    markdown = markdown.replace(/\*(.*?)\*/gim, '<em>$1</em>');
-
-    // Convert underlined text
-    markdown = markdown.replace(/__(.*?)__/gim, '<u>$1</u>');
-    
-    // Convert strikethrough text
-    markdown = markdown.replace(/~(.*?)~/gim, '<s>$1</s>');
-    
-    // Horizontal rule
-    markdown = markdown.replace(/^----* *$/gm, '<hr></hr>');
-    
-    // Highlight
-    markdown = markdown.replace(/==(?:\[(.*?)\])?(.*?)==/g, (match, color, text) => {
-		if (color) {
-			return `<span style="background-color:${color};">${text}</span>`;
-		} else {
-			return `<span class="highlight">${text}</span>`;
-    }});
-    
-    // Text-color
-    markdown = markdown.replace(/(?<!\<\!)--(?:\[(.*?)\])?(.*?)--/g, (match, color, text) => {
-		if (color) {
-			return `<span style="color:${color};">${text}</span>`;
-		} else {
-			return `<span>${text}</span>`;
-    }});
-    
-    markdown = markdown.replace(/\\qed/g, "<div class='qed'>&#8718;</div>");
 
 	// Convert images
 	// markdown = markdown.replace(/!\[(.*?)\]\((.*?)\)/gim, '<img src="$2" alt="$1"></img>');
 	// New convert images - has options for align and float
-	markdown = markdown.replace(/!\[(.*?)\](?:\{(.[^\}]*?)\})?\((.*?)\)/g, (match, alt, options, src) => {
-			if(options === undefined){
-				return `<img src="${src}" alt="${alt}"></img>`;
-			}
-			
-			if(options.includes('float')) {
-				return `<img src="${src}" alt="${alt}" style="${options}"></img>`;
-			}
-			
-			if(options.includes('right')) {
-				return `<div style="width:'100%'; text-align: right;"><img src="${src}" alt="${alt}"></img></div>`;
-			} else if(options.includes('center')) {
-				return `<div style="width:'100%'; text-align: center;"><img src="${src}" alt="${alt}"></img></div>`;
-			}
-			
-			return `<img src="${src}" alt="${alt}"></img>`;
-		}
-	);
+    markdown = markdown.replace(/!\[(.*?)\](?:\{(.[^\}]*?)\})?\((.*?)\)/g, (match, alt, options, src) => {
+            if(options === undefined){
+                return `<img src="${src}" alt="${alt}"></img>`;
+            }
+            
+            if(options.includes('float')) {
+                return `<img src="${src}" alt="${alt}" style="${options}"></img>`;
+            }
+            
+            if(options.includes('right')) {
+                return `<div style="width:'100%'; text-align: right;"><img src="${src}" alt="${alt}"></img></div>`;
+            } else if(options.includes('center')) {
+                return `<div style="width:'100%'; text-align: center;"><img src="${src}" alt="${alt}"></img></div>`;
+            }
+            
+            return `<img src="${src}" alt="${alt}"></img>`;
+        }
+    );
     // Convert links
     markdown = markdown.replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2">$1</a>');
     
