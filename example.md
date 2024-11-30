@@ -7,7 +7,7 @@ Let's see some of the stuff it can do!
 As you've already seen, we can do headers and blockquotes.
 We can als do **bold** and *italic* text and more. 
 We even have some shortcuts:
-- `CTRL` s+ `b`: **Bold**
+- `CTRL` + `b`: **Bold**
 - `CTRL` + `i`: *Italics*
 - `CTRL` + `u`: __Underline__
 - `CTRL` + `4` (can think of `CTRL` + `$`): $\LaTeX$
