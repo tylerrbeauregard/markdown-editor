@@ -486,8 +486,10 @@ function parseMarkdown(markdown) {
                 renderedMath = `<span class="katex-inline">${katex.renderToString(mathExpression.slice(1, -1).trim(), {macros: katexMacros})}</span>`;
             }
         } catch (error) {
+	    // log error for math, and render the text in red.
             console.error("Error rendering math:", error);
-            renderedMath = mathExpression; // Fallback to raw math expression
+	    // Fallback to raw math expression
+            renderedMath = `<span style="color:red;">${mathExpression};</span>`
         }
 
         // Cache the rendered output
