@@ -172,6 +172,14 @@ editor.commands.addCommand({ // math
   exec: wrapWithDollarSigns,
   readOnly: false // false if this command should not apply in readOnly mode
 });
+editor.commands.addCommand({ // math 3
+  name: 'math3',
+  bindKey: {
+    win: '$',
+  },
+  exec: wrapWithDollarSigns,
+  readOnly: false // false if this command should not apply in readOnly mode
+});
 
 function bold(editor) {
 	// If there is no selection
@@ -213,7 +221,8 @@ function wrapWithDollarSigns(editor) {
 	// If there is no selection
 	if( editor.selection.isEmpty() ){
 		var editorPosition = editor.getCursorPosition();
-		editor.session.insert(editorPosition, "$ $");
+		editor.session.insert(editorPosition, "$");
+		editor.moveCursorToPosition({row: editor.getCursorPosition().row,column: editor.getCursorPosition().column + 1})
 		return;
 	}
 	// Otherwise there is 
@@ -544,7 +553,7 @@ function documentUpdate(aceEditor, toId) {
 	}
 	
 	// Set cookie
-	setCookie("editorContent", markdown, 2);
+	localStorage.setItem("editorContent", markdown);
 	contentSaved = true;
 }
 
@@ -606,6 +615,8 @@ katexMacros = {
 // Function to render the object as a table
 function renderTable() {
 	tableBody.innerHTML = ""; // Clear existing rows
+	// Delete cache of pre-rendered KaTeX
+	mathCache.clear();
 	for (const [key, value] of Object.entries(katexMacros)) {
 		const row = document.createElement("tr");
 
@@ -641,7 +652,7 @@ function renderTable() {
 		// Save changes on blur
 		keyCell.addEventListener("blur", () => updateObjectKey(key, keyCell.textContent, valueCell.textContent));
 		valueCell.addEventListener("blur", () => updateObjectValue(key, valueCell.textContent));
-
+		
 		tableBody.appendChild(row);
 	}
 }
@@ -700,28 +711,8 @@ editor.getSession().on('change', function() {
 	contentSaved = false;
 })
 
-function getCookie(cname) {
-  let name = cname + "=";
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
-  for(let i = 0; i < ca.length; i++) {
-    let c = ca[i].trimStart();
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}
-
-function setCookie(cname, cvalue, exdays) {
-  const d = new Date();
-  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-  let expires = "expires="+d.toUTCString();
-  document.cookie = cname + "=" + encodeURIComponent(cvalue) + ";" + expires + ";path=/";
-}
-
-function loadFromCookies(editor) {
-	var editorContent = getCookie("editorContent");
+function loadFromLocalStorage(editor) {
+	var editorContent = localStorage.getItem("editorContent");
 	if(editorContent) {
 		editor.setValue(editorContent);
 	}
@@ -738,7 +729,7 @@ leftBox.style.flexShrink = 0;
 wrapper.style.height = webpageHeight - navbarHeight;
 output.style.height = webpageHeight - navbarHeight;
 
-loadFromCookies(editor);
+loadFromLocalStorage(editor);
 
 documentUpdate(editor, 'output');
 
