@@ -3,32 +3,93 @@
 <head>
   <title>Tyler's Editor</title>
   
-  <link rel="icon" href="data:image/png;base64,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" sizes="any" type="image/png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://tylerrbeauregard.github.io/home-page/Fonts/Serif/cmun-serif.css">
-  <link rel="stylesheet" href="style.css">
-  
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+  <link rel="icon" href="images/favicon.png" sizes="any" type="image/png">
+  <script defer src="katex.min.js"></script>
   <script src="https://ajaxorg.github.io/ace-builds/src-noconflict/ace.js"></script>
-  <script src="script.js" defer></script>
+  
+  <script src="interface.js" defer></script>
+  <script src="editor-config.js" defer></script>
+  <script src="parser.js" defer></script>
+  <script src="custom-commands.js" defer></script>
+  <script src="main.js" defer></script>
+  <link rel="stylesheet" href = "./Fonts/Serif/cmun-serif.css" type="text/css" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="katex.min.css">
 </head>
 <body>
 
 <div id="navbar" class="navbar">
-  <image class="logo" src="data:image/png;base64,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"></image>
-  <div class="topel" id="showhide" onclick="showhide();">Hide</div>
-  <div class="topel" onclick="saveToFile(editor);">Save text</div>
-  <div class="topel" id="openButton">Custom Command</div>
-  <div class="topel" onclick="documentUpdate(editor, 'output');">Compile</div>
-  <div class="topel" style="float:right;", onclick="printDiv('output');">Print</div>
-  <div class="topel" onclick="loadExample();">Demo!</div>
+  <a target="_blank" href="https://github.com/tylerrbeauregard/markdown-editor/">
+    <image class="logo" src="images/favicon.png"></image>
+  </a>
+  <div class="topel topel-left">
+     <img class="icon" src="./images/menu-line.png"></img>
+  </div>
+  <div class="topel topel-left" onclick="saveToFile(editor)" title="Save markdown file">
+      <img class="icon" src="./images/download-line.png"></img>
+  </div>
+  <div class="topel topel-left" id="openButton" title="Custom LaTeX Commands">
+    <img class="icon" src="./images/slash-commands-2.png"></img>
+  </div>
+  <div class="topel topel-left" title="Bold - CTRL+B" onclick="bold(editor);editor.focus()">
+    <img class="icon" src="./images/bold.png"></img>
+  </div>
+  <div class="topel topel-left" title="Italics - CTRL+I" onclick="italicize(editor)">
+    <img class="icon" src="./images/italic.png"></img>
+  </div>
+  <div class="topel topel-left" title="Underline - CTRL+U" onclick="underline(editor)">
+    <img class="icon" src="./images/underline.png"></img>
+  </div>
+  <div class="topel topel-left" title="Strikethrough - CTRL+Shift+S" onclick="strikethrough(editor)">
+    <img class="icon" src="./images/strikethrough.png"></img>
+  </div>
+  <div class="topel topel-left" title="Link - CTRL+k" onclick="link(editor)">
+    <img class="icon" src="./images/link.png"></img>
+  </div>
+  <div class="topel topel-left" title="Inline math - CTRL+$" onclick="inlineMath(editor)">
+    <img class="icon" src="./images/formula.png"></img>
+  </div>
+  <div class="topel topel-left" title="Display math" onclick="inlineMath(editor);inlineMath(editor);">
+    <img class="icon" src="./images/functions.png"></img>
+  </div>
+  <div class="topel topel-left" title="Code block" onclick="codeBlock(editor);">
+    <img class="icon" src="./images/code-view.png"></img>
+  </div>
+  <div class="topel topel-left" title="Image" onclick="addImage(editor);">
+    <img class="icon" src="./images/image-add-line.png"></img>
+  </div>
+  
+  <div class="topel topel-right", onclick="printDiv('output');" title="Print">
+    <img class="icon" src="./images/printer-fill.png"></img>
+  </div>
+  <div class="topel topel-right" title="Compile - CTRL+Enter" onclick="documentUpdate(editor, 'output');">
+    <img class="icon" src="./images/reset-left-line.png"></img>
+  </div>
+  <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank"></a><div class="topel topel-right" style="float:right;" title="About Markdown ↗">
+    <img class="icon" src="./images/question-line.png"></img>
+  </div></a>
 </div>
+
+
 
 <div class="wrapper">
   <div class="box">
     <div id="editor"># Hello</div>
   </div>
-  <div class="handler"><div class=dragbar></div></div>
+  <div class="handler">
+    <div class=dragbuttons>
+      <div class="dragbutton" onclick="viewOutput()">
+        <img src="./images/arrow-left-circle-fill.png"></img>
+      </div>
+      <div class="dragbutton" onclick="viewEditor()">
+        <img src="./images/arrow-right-circle-fill.png"></img>
+      </div>
+      <div class="dragbutton" onclick="viewCenter()">
+        <img src="./images/collapse-horizontal-line.png"></img>
+      </div>
+    </div>
+    <div class=dragbar></div>
+  </div>
   <div class="box" id="right"><div id="output"></div></div>
 </div>
 
