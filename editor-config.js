@@ -1,0 +1,280 @@
+var editor = ace.edit("editor");
+editor.getSession().setUseWorker(false);
+editor.setTheme("ace/theme/solarized_dark");
+editor.session.setMode("ace/mode/markdown");
+editor.setOptions({
+    wrap: true,
+    indentedSoftWrap: false,
+});
+
+editor.commands.addCommand({
+  name: 'reload-editor',
+  bindKey: {
+    win: 'Ctrl-Space',
+    mac: 'Command-Space'
+  },
+  exec: function(editor) {
+    documentUpdate(editor, 'output');
+  },
+  readOnly: false // false if this command should not apply in readOnly mode
+});
+editor.commands.addCommand({
+  name: 'reload-editor-2',
+  bindKey: {
+    win: 'Ctrl-S',
+    mac: 'Command-S'
+  },
+  exec: function(editor) {
+    documentUpdate(editor, 'output');
+  },
+  readOnly: false // false if this command should not apply in readOnly mode
+});
+editor.commands.addCommand({
+  name: 'reload-editor-3',
+  bindKey: {
+    win: 'Ctrl-Enter',
+    mac: 'Command-Enter'
+  },
+  exec: function(editor) {
+    documentUpdate(editor, 'output');
+  },
+  readOnly: false // false if this command should not apply in readOnly mode
+});
+editor.commands.addCommand({
+  name: 'print',
+  bindKey: {
+    win: 'Ctrl-P',
+    mac: 'Command-P'
+  },
+  exec: function(editor) {
+    printDiv('output');
+  },
+  readOnly: false // false if this command should not apply in readOnly mode
+});
+editor.commands.addCommand({
+  name: 'save',
+  bindKey: {
+    win: 'Ctrl-Shift-S',
+    mac: 'Command-Shift-S'
+  },
+  exec: saveToFile,
+  readOnly: false // false if this command should not apply in readOnly mode
+});
+editor.commands.addCommand({ // Bold
+  name: 'bold',
+  bindKey: {
+    win: 'Ctrl-B',
+    mac: 'Command-B'
+  },
+  exec: bold,
+  readOnly: false // false if this command should not apply in readOnly mode
+});
+editor.commands.addCommand({ // Underline
+  name: 'underline',
+  bindKey: {
+    win: 'Ctrl-U',
+    mac: 'Command-U'
+  },
+  exec: underline,
+  readOnly: false // false if this command should not apply in readOnly mode
+});
+editor.commands.addCommand({ // Italicize
+  name: 'italicize',
+  bindKey: {
+    win: 'Ctrl-I',
+    mac: 'Command-I'
+  },
+  exec: italicize,
+  readOnly: false // false if this command should not apply in readOnly mode
+});
+editor.commands.addCommand({ // Strikethrough
+  name: 'strikethrough',
+  bindKey: {
+    win: 'Ctrl-Shift-S',
+    mac: 'Command-Shift-S'
+  },
+  exec: strikethrough,
+  readOnly: false // false if this command should not apply in readOnly mode
+});
+editor.commands.addCommand({ // Strikethrough
+  name: 'link',
+  bindKey: {
+    win: 'Ctrl-K',
+    mac: 'Command-K'
+  },
+  exec: link,
+  readOnly: false // false if this command should not apply in readOnly mode
+});
+editor.commands.addCommand({ // math
+  name: 'math1',
+  bindKey: {
+    win: 'Ctrl-4',
+    mac: 'Command-4'
+  },
+  exec: inlineMath,
+  readOnly: false // false if this command should not apply in readOnly mode
+});
+editor.commands.addCommand({ // math
+  name: 'math2',
+  bindKey: {
+    win: 'Ctrl-Shift-4',
+    mac: 'Command-Shift-4'
+  },
+  exec: inlineMath,
+  readOnly: false // false if this command should not apply in readOnly mode
+});
+editor.commands.addCommand({ // math 3
+  name: 'math3',
+  bindKey: {
+    win: '$',
+  },
+  exec: dollarSignOverload,
+  readOnly: false // false if this command should not apply in readOnly mode
+});
+
+function bold(editor) {
+	// If there is no selection
+	if( editor.selection.isEmpty() ){
+		var editorPosition = editor.getCursorPosition();
+		editor.session.insert(editorPosition, "****");
+        editor.moveCursorToPosition({
+            row: editor.getCursorPosition().row,
+            column: editor.getCursorPosition().column - 2})
+		return;
+	}
+	// Otherwise there is 
+	selectionRange = editor.getSelectionRange();
+	editor.session.insert(selectionRange.end, "**");
+	editor.session.insert(selectionRange.start, "**");
+}
+function italicize(editor) {
+	// If there is no selection
+	if( editor.selection.isEmpty() ){
+		var editorPosition = editor.getCursorPosition();
+		editor.session.insert(editorPosition, "**");
+        editor.moveCursorToPosition({
+            row: editor.getCursorPosition().row,
+            column: editor.getCursorPosition().column - 1})
+		return;
+	}
+	// Otherwise there is 
+	selectionRange = editor.getSelectionRange();
+	editor.session.insert(selectionRange.end, "*");
+	editor.session.insert(selectionRange.start, "*");
+}
+function underline(editor) {
+	// If there is no selection
+	if( editor.selection.isEmpty() ){
+		var editorPosition = editor.getCursorPosition();
+		editor.session.insert(editorPosition, "____");
+        editor.moveCursorToPosition({
+            row: editor.getCursorPosition().row,
+            column: editor.getCursorPosition().column - 2})
+		return;
+	}
+	// Otherwise there is 
+	selectionRange = editor.getSelectionRange();
+	editor.session.insert(selectionRange.end, "__");
+	editor.session.insert(selectionRange.start, "__");
+}
+function strikethrough(editor) {
+	// If there is no selection
+	if( editor.selection.isEmpty() ){
+		var editorPosition = editor.getCursorPosition();
+		editor.session.insert(editorPosition, "~~~~");
+        editor.moveCursorToPosition({
+            row: editor.getCursorPosition().row,
+            column: editor.getCursorPosition().column - 2})
+		return;
+	}
+	// Otherwise there is 
+	selectionRange = editor.getSelectionRange();
+	editor.session.insert(selectionRange.end, "~~");
+	editor.session.insert(selectionRange.start, "~~");
+}
+function link(editor) {
+    // If there is no selection
+	if( editor.selection.isEmpty() ){
+		var editorPosition = editor.getCursorPosition();
+		editor.session.insert(editorPosition, "[]()");
+        editor.moveCursorToPosition({
+            row: editor.getCursorPosition().row,
+            column: editor.getCursorPosition().column - 1})
+		return;
+	}
+	// Otherwise there is 
+	selectionRange = editor.getSelectionRange();
+	editor.session.insert(selectionRange.end, "]()");
+	editor.session.insert(selectionRange.start, "[");
+    editor.moveCursorToPosition({
+            row: selectionRange.end.row,
+            column: selectionRange.end.column + 3});
+}
+function inlineMath(editor) {
+    // If there is no selection
+	if( editor.selection.isEmpty() ){
+		var editorPosition = editor.getCursorPosition();
+		editor.session.insert(editorPosition, "$$");
+		editor.moveCursorToPosition({
+            row: editor.getCursorPosition().row,
+            column: editor.getCursorPosition().column - 1});
+		return;
+	}
+	// Otherwise there is 
+	selectionRange = editor.getSelectionRange();
+	editor.session.insert(selectionRange.end, "$");
+	editor.session.insert(selectionRange.start, "$");
+}
+// This allows us to highlight a selection, press dollar sign and
+// wrap it. If nothing is selected, we just type a single $
+function dollarSignOverload(editor) {
+	// If there is no selection
+	if( editor.selection.isEmpty() ){
+		var editorPosition = editor.getCursorPosition();
+		editor.session.insert(editorPosition, "$");
+		editor.moveCursorToPosition({
+            row: editor.getCursorPosition().row,
+            column: editor.getCursorPosition().column + 1})
+		return;
+	}
+	// Otherwise there is 
+	selectionRange = editor.getSelectionRange();
+	editor.session.insert(selectionRange.end, "$");
+	editor.session.insert(selectionRange.start, "$");
+}
+function codeBlock(editor) {
+    // If there is no selection
+	if( editor.selection.isEmpty() ){
+		var editorPosition = editor.getCursorPosition();
+		editor.session.insert(editorPosition, "```language\n\n```");
+        editor.moveCursorToPosition({
+            row: editor.getCursorPosition().row - 1,
+            column: 0});
+		return;
+	}
+	// Otherwise there is 
+	selectionRange = editor.getSelectionRange();
+	editor.session.insert(selectionRange.end, "\n```\n");
+	editor.session.insert(selectionRange.start, "```language\n");
+    editor.moveCursorToPosition({
+            row: selectionRange.end.row+3,
+            column: 0});
+}
+function addImage(editor) {
+    // If there is no selection
+	if( editor.selection.isEmpty() ){
+		var editorPosition = editor.getCursorPosition();
+		editor.session.insert(editorPosition, "![alt text]()");
+        editor.moveCursorToPosition({
+            row: editor.getCursorPosition().row,
+            column: editor.getCursorPosition().column - 1});
+		return;
+	}
+	// Otherwise there is 
+	selectionRange = editor.getSelectionRange();
+	editor.session.insert(selectionRange.end, "]()");
+	editor.session.insert(selectionRange.start, "![");
+    editor.moveCursorToPosition({
+            row: selectionRange.end.row,
+            column: selectionRange.end.column + 4});
+}
