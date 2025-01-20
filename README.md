@@ -10,13 +10,13 @@ It supports most standard markdown, and some extended features:
  - Math (using [KaTeX](https://katex.org/))
    - Accepts inline (`$x$` or `\(x\)`) and display style (`$$x$$` or `\[x\]`)
    - Also has the benefit of allowing custom commands and shortcuts
- - Code blocks (rendered in Ace Editor - read only mode)
+ - Code blocks with syntax highlighting (rendered in Ace Editor - read only mode)
  - Numbered lists in any order
  - Highlighting using `==highlighted thing==` or `==[color]highlighted thing==`
 
 There is also some custom syntax added:
  - Use `--[color]example text--` for colored text
- - Type `\qed` (outside of math mode) for a right-aligne QED symbol.
+ - Type `\qed` (outside of math mode) for a right-aligned QED symbol.
 
 Some icons come from [Iconoir](https://github.com/iconoir-icons/iconoir/blob/main/README.md) (MIT License).
 
