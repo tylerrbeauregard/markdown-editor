@@ -14,14 +14,15 @@
   <script src="parser.js" defer></script>
   <script src="custom-commands.js" defer></script>
   <script src="main.js" defer></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/bitmaks/cm-web-fonts@latest/fonts.css">
+  <link rel="stylesheet" href = "./Fonts/Serif/cmun-serif.css" type="text/css" />
   <link rel="stylesheet" href="style.css"> 
+  <link rel="stylesheet" href="toggle.css"
 </head>
-<body>
 
+<body class="dark-mode">
 <div id="navbar" class="navbar">
   <a target="_blank" href="https://github.com/tylerrbeauregard/markdown-editor/">
-    <image class="logo" src="images/favicon.png"></image>
+    <image class="logo" src="images/logo.png"></image>
   </a>
   <div class="topel topel-left">
      <img class="icon" src="./images/menu-line.png"></img>
@@ -63,6 +64,20 @@
   <div class="topel topel-right", onclick="printDiv('output');" title="Print">
     <img class="icon" src="./images/printer-fill.png"></img>
   </div>
+  
+  <label for="checkbox" class="toggle">
+    <input type="checkbox" class="checkbox" id="checkbox" />
+    <div class="slider">
+      <div class="moon"></div>
+      <div class="sun"></div>
+    </div>
+  </label>
+  
+  <div class="topel topel-right">
+    <input type="color" id="themeSelector" name="Theme" value="#FFFB1D" />
+  </div>
+
+  
   <div class="topel topel-right" title="Compile - CTRL+Enter" onclick="documentUpdate(editor, 'output');">
     <img class="icon" src="./images/reset-left-line.png"></img>
   </div>
