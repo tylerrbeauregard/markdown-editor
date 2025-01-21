@@ -7,12 +7,26 @@
 	var leftBox = wrapper.querySelector('.box');
 	var rightBox = document.getElementById("right");
 	var output = document.getElementById("output");
+    var lightDarkToggle = document.getElementById("checkbox");
+    var themeSelector = document.getElementById("themeSelector");
     
     // Global vars
 	var isHandlerDragging = false;
 	var navbarHeight = 50;
+    
+    var colorScheme = body.className;
 }
 
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    colorScheme = "light-mode";
+    body.className = colorScheme;
+    lightDarkToggle.checked = true
+}
+
+themeSelector.addEventListener('change', function () {
+    var root = document.querySelector(':root');
+    root.style.setProperty('--theme-color', themeSelector.value);
+});
 
 // Big print listener
 document.addEventListener('keyup', (e) => {
@@ -144,6 +158,7 @@ function printDiv(divId) {
 	body.style.overflow = "hidden";
 	leftBox.style.width = "50%";
 	output.style.overflow = "auto";
+    changeColorTheme(colorScheme);
 }
 
 function viewOutput() {

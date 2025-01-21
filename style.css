@@ -1,9 +1,83 @@
+:root {
+  --theme-color: #FFFB1D;
+}
+
+.light-mode {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  
+  /*links*/
+  --link-unvisited: #809fff;
+  --link-visited: #809fff;
+  --link-hover: #809fff;
+  --link-active: #809fff;
+  
+  /*inline-code*/
+  --inline-code-background-color: #478494;
+  
+  --table-heading-background-color: #9394a5;
+  --table-border-color: #0E0E0E;
+  
+  --navbar-background-color: #484b6a;
+  
+  /*boolean*/
+  --navbar-icon-white: 1;
+  --navbar-icon-hover-white: 0;
+  
+  /*command window*/
+  --command-window-text: black;
+  --command-window-background: #d2d3db;
+  
+  /*list bullet colors*/
+  --list-bullet-color: #fffffff;
+}
+
+/* Define root variables for dark mode */
+.dark-mode {
+  --background-color: #121212;
+  --text-color: #ffffff;
+
+  /*links*/
+  --link-unvisited: #809fff;
+  --link-visited: #809fff;
+  --link-hover: #DD2CFF;
+  --link-active: #809fff;
+  
+  /*inline-code*/
+  --inline-code-background-color: #002B36;
+  
+  --table-heading-background-color: #1C1C1C;
+  --table-border-color: #504E4E;
+  
+  --navbar-background-color: #333333;
+  
+  /*boolean*/
+  --navbar-icon-white: 1;
+  --navbar-icon-hover-white: 0;
+  
+  --command-window-text: #cccccc;
+  --command-window-background: #222222;
+  
+  /*list bullet colors*/
+  --list-bullet-color: var(--theme-color);
+}
+
 /* General Layout and Reset */
 html, body {
   margin: 0;
   height: 100%;
   overflow: hidden;
 }
+
+#themeSelector {
+  background: var(--background-color);
+  border: 1px solid var(--background-color);
+}
+
+#themeSelector {
+  border: none;
+}
+
 
 /* Editor Styles */
 #editor {
@@ -26,7 +100,7 @@ html, body {
 #output {
   font-size: 16pt;
   font-family: "Computer Modern Serif", serif;
-  color: white;
+  color: var(--text-color);
   position: relative;
   height: 100%;
   padding: 1cm 10%;
@@ -34,14 +108,31 @@ html, body {
   text-align: justify;
   box-sizing: border-box;
   overflow-wrap: break-word;
+  background: var(--background-color);
 }
 
-#output a {
-  color: #809fff;
+/* unvisited link */
+#output a:link {
+  color: var(--link-unvisited);
+}
+
+/* visited link */
+#output a:visited {
+  color: var(--link-visited);
+}
+
+/* mouse over link */
+#output a:hover {
+  color: var(--link-hover);
+}
+
+/* selected link */
+#output a:active {
+  color: var(--link-active);
 }
 
 #output h1 {
-  background: #FFFB1D;
+  background: var(--theme-color);
   color: black;
   padding-left: 20px;
   border-radius: 5px;
@@ -54,13 +145,13 @@ html, body {
 }
 
 #output li::marker, ul::marker {
-  color: #FFFB1D;
+  color: var(--list-bullet-color);
 }
 
 #output hr {
-  color: #FFFB1D;
-  background-color: #FFFB1D;
-  border-color: #FFFB1D;
+  color: var(--theme-color);
+  background-color: var(--theme-color);
+  border-color: var(--theme-color);
 }
 
 #output blockquote {
@@ -68,17 +159,18 @@ html, body {
   margin-bottom: 10px;
   margin-left: 2px;
   padding-left: 30px;
-  border-left: 5px solid #FFFB1D;
+  border-left: 5px solid var(--theme-color);
 }
 
+/* Used only for inline code */
 #output code {
   font-size: 14pt;
-  background-color: #002B36;
+  background-color: var(--inline-code-background-color);
   padding: 1px;
 }
 
 #output .highlight {
-  background-color: #FFFB1D;
+  background-color: var(--theme-color);
   color: black;
   padding-left: 2px;
   padding-right:2px;
@@ -91,12 +183,12 @@ html, body {
   border-radius: 5px;
 }
 #output th, td {
-  border: 1px solid #504E4E;
+  border: 1px solid var(--table-border-color);
   padding: 8px;
   text-align: left;
 }
 #output th {
-  background-color: #1C1C1C;
+  background-color: var(--table-heading-background-color);
   font-weight: bold;
 }
 
@@ -104,7 +196,7 @@ html, body {
   width: 100%;
   font-size: 20pt;
   text-align: right;
-  color: #FFFB1D;
+  color: var(--theme-color);
 }
 
 #output img, image {
@@ -116,8 +208,6 @@ html, body {
 .wrapper {
   width: auto;
   height: 100%;
-  background-color: #fff;
-  color: #444;
   display: flex; /* Flexbox for layout */
   padding: 0;
   z-index: 2;
@@ -134,7 +224,7 @@ html, body {
 /* Handler (Resizable Divider) */
 .handler {
   width: 15px;
-  background: #333;
+  background: var(--navbar-background-color);
   padding: 0;
   cursor: ew-resize;
   flex: 0 0 auto;
@@ -144,7 +234,7 @@ html, body {
   display: block;
   width: 15px;
   height: 100%;
-  background: #333;
+  background: var(--navbar-background-color);
   margin: 0 auto;
 }
 
@@ -154,7 +244,7 @@ html, body {
   background: #111;
   height: 20%;
   width: 2px;
-  transform: translateY(-50%);
+  transform: translate(-2px, -50%);
   top: 50%;
   left: 50%;
   text-align: center;
@@ -165,6 +255,7 @@ html, body {
   top: 30%;
   width: 50px;
   transform: translateX(-4px);
+  z-index: 1;
 }
 
 .dragbutton {
@@ -198,17 +289,22 @@ html, body {
 /* Navbar */
 .navbar {
   overflow: hidden;
-  background-color: #333;
+  background-color: var(--navbar-background-color);
   position: fixed;
   top: 0;
   width: 100%;
   height: 50px;
   z-index: 80;
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
 }
 
 .topel {
   font-family: Arial, sans-serif;
-  color: #f2f2f2;
+  color: var(--text-color);
   text-align: center;
   padding: 13px 5px;
   font-size: 17px;
@@ -225,7 +321,7 @@ html, body {
 }
 
 .navbar .topel:hover {
-  background: #FFFB1D;
+  background: var(--theme-color);
   color: black;
   cursor: pointer;
 }
@@ -233,37 +329,41 @@ html, body {
 .navbar .logo {
   float: left;
   display: block;
-  color: #f2f2f2;
   text-align: center;
-  padding: 5px;
+  margin: 5px;
   height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: var(--theme-color);
+  
+  user-drag: none;
+  -webkit-user-drag: none;
 }
 
 .navbar .icon{
   width: 24px;
   height: 24px;
   text-align: center;
-  -webkit-filter: invert(1);
-  filter: invert(1);
+  -webkit-filter: invert(var(--navbar-icon-white));
+  filter: invert(var(--navbar-icon-white));
+
+  user-drag: none;
+  -webkit-user-drag: none;
 }
 
 .navbar .topel:hover .icon{
-  -webkit-filter: invert(0);
-  filter: invert(0);
+  -webkit-filter: invert(var(--navbar-icon-hover-white));
+  filter: invert(--navbar-icon-hover-white);
 }
 
-.navbar .compile-button{
-  margin: auto;
-  width: 130px;
-  height: 10px;
-  padding-left: 55px;
-  transform: translate(-55px,0);
-  border-style: solid;
-  border-color: #FFFB1D;
-  border-radius: 50px;
-  margin-top: 2px;
+.navbar .toggle{
+  text-align: center;
+  padding: 13px 5px;
+  font-size: 17px;
+  display: flex;
+  float: right;
+  align-items:center;
 }
-
 
 /* Custom Command Window */
 #customCommandWindow {
@@ -275,12 +375,12 @@ html, body {
   width: 60%;
   max-width: 600px;
   padding: 20px;
-  background: #222;
-  border: 1px solid #ccc;
+  background: var(--command-window-background);
+  border: 1px solid var(--command-window-text);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  font-family: Arial, sans-serif;
-  color: #fff;
+  font-family: "Open Sans", sans-serif;
+  color: var(--command-window-text);
   display: none; /* Initially hidden */
   height: 400px;
   overflow: hidden;
@@ -296,11 +396,11 @@ html, body {
 #customCommandWindow th, #customCommandWindow td {
   padding: 10px;
   text-align: left;
-  border: 1px solid #ddd;
+  border: 1px solid var(--table-border-color);
 }
 
 #customCommandWindow th {
-  background-color: #565656;
+  background-color: var(--table-heading-background-color);
 }
 
 #customCommandWindow table tbody {
@@ -347,7 +447,16 @@ html, body {
   cursor: pointer;
 }
 
-#closeButton:hover {
+.deleteButton {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+#closeButton:hover, .deleteButton:hover{
   background-color: #d63030;
 }
 
@@ -363,20 +472,16 @@ html, body {
   .navbar {
     display: none;
   }
-  
-  .compile-button {
-    display: none;
-  }
 
   body {
     overflow: visible;
-    #fff;
+    background #ffffff;
   }
 
   .wrapper {
     padding: 0;
   }
-  
+    
   .code-block-output {
     font-size: 14pt;
     position: relative;
@@ -384,44 +489,32 @@ html, body {
     height: auto;
   }
 
-  .handler {
-    display: none;
-    visibility: hidden;
-  }
+	.handler {
+		display: none;
+		visibility: hidden;
+	}
 
-  .dragbar {
-    display: none;
-    visibility: hidden;
-  }
-  
-  .box {
-    box-sizing: border-box;
-    flex: 1 1 auto; /* Flexible and equally sized */
-    background-color: white;
-    color: #aaa;
-    padding: 0;
-  }
-  
-  #output {
-    font-size: 12pt;
-    font-family: "Computer Modern Serif", serif;
-    position: relative;
-    height: 100%;
-    padding: 1cm 10%;
-    overflow: auto;
-    color: black;
-    background-color: white;
-  }
-
-  #output li::marker, ul::marker {
-      color: black;
-  }
-  
-  #output code {
-    background: #BBBBBB;
-  }
-  
-  #output th {
-    background: #FFFB1D;
-  }
+	.dragbar {
+		display: none;
+		visibility: hidden;
+	}
+	
+	.box {
+		box-sizing: border-box;
+		flex: 1 1 auto; /* Flexible and equally sized */
+		background-color: white;
+		color: #aaa;
+		padding: 0;
+	}
+	
+	#output {
+		font-size: 12pt;
+		font-family: "Computer Modern Serif", serif;
+		position: relative;
+		height: 100%;
+		padding: 1cm 10%;
+		overflow: auto;
+		color: black;
+		background-color: white;
+	}	
 }

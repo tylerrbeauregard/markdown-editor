@@ -100,7 +100,7 @@ function parseMarkdown(markdown) {
     // Highlight
     markdown = markdown.replace(/==(?:\[(.*?)\])?(.*?)==/g, (match, color, text) => {
 		if (color) {
-			return `<span style="background-color:${color};">${text}</span>`;
+			return `<span class="highlight" style="background-color:${color};">${text}</span>`;
 		} else {
 			return `<span class="highlight">${text}</span>`;
     }});
@@ -316,7 +316,11 @@ function createTempEditor(idNumber, language) {
 	var id = 'code-block-' + idNumber;
 	var tempEditor = ace.edit(id.toString());
 	tempEditor.getSession().setUseWorker(false);
-	tempEditor.setTheme("ace/theme/solarized_dark");
+    if (colorScheme == 'dark-mode'){
+        tempEditor.setTheme("ace/theme/solarized_dark");
+    } else {
+        tempEditor.setTheme("ace/theme/iplastic");
+    }
 	tempEditor.session.setMode("ace/mode/"+language);
 	tempEditor.setOptions({
         readOnly: true,

@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+  <title>Tyler's Editor</title>
+  
+  <link rel="icon" href="images/favicon.png" sizes="any" type="image/png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+
+  <script src="https://ajaxorg.github.io/ace-builds/src-noconflict/ace.js"></script>
+  
+  <script src="interface.js" defer></script>
+  <script src="editor-config.js" defer></script>
+  <script src="parser.js" defer></script>
+  <script src="custom-commands.js" defer></script>
+  <script src="main.js" defer></script>
+  <link rel="stylesheet" href = "./Fonts/Serif/cmun-serif.css" type="text/css" />
+  <link rel="stylesheet" href="style.css"> 
+  <link rel="stylesheet" href="toggle.css"
+</head>
+
+<body class="dark-mode">
+<div id="navbar" class="navbar">
+  <a target="_blank" href="https://github.com/tylerrbeauregard/markdown-editor/">
+    <image class="logo" src="images/logo.png"></image>
+  </a>
+  <div class="topel topel-left">
+     <img class="icon" src="./images/menu-line.png"></img>
+  </div>
+  <div class="topel topel-left" onclick="saveToFile(editor)" title="Save markdown file">
+      <img class="icon" src="./images/download-line.png"></img>
+  </div>
+  <div class="topel topel-left" id="openButton" title="Custom LaTeX Commands">
+    <img class="icon" src="./images/slash-commands-2.png"></img>
+  </div>
+  <div class="topel topel-left" title="Bold - CTRL+B" onclick="bold(editor);editor.focus()">
+    <img class="icon" src="./images/bold.png"></img>
+  </div>
+  <div class="topel topel-left" title="Italics - CTRL+I" onclick="italicize(editor)">
+    <img class="icon" src="./images/italic.png"></img>
+  </div>
+  <div class="topel topel-left" title="Underline - CTRL+U" onclick="underline(editor)">
+    <img class="icon" src="./images/underline.png"></img>
+  </div>
+  <div class="topel topel-left" title="Strikethrough - CTRL+Shift+S" onclick="strikethrough(editor)">
+    <img class="icon" src="./images/strikethrough.png"></img>
+  </div>
+  <div class="topel topel-left" title="Link - CTRL+k" onclick="link(editor)">
+    <img class="icon" src="./images/link.png"></img>
+  </div>
+  <div class="topel topel-left" title="Inline math - CTRL+$" onclick="inlineMath(editor)">
+    <img class="icon" src="./images/formula.png"></img>
+  </div>
+  <div class="topel topel-left" title="Display math" onclick="inlineMath(editor);inlineMath(editor);">
+    <img class="icon" src="./images/functions.png"></img>
+  </div>
+  <div class="topel topel-left" title="Code block" onclick="codeBlock(editor);">
+    <img class="icon" src="./images/code-view.png"></img>
+  </div>
+  <div class="topel topel-left" title="Image" onclick="addImage(editor);">
+    <img class="icon" src="./images/image-add-line.png"></img>
+  </div>
+  
+  <div class="topel topel-right", onclick="printDiv('output');" title="Print">
+    <img class="icon" src="./images/printer-fill.png"></img>
+  </div>
+  
+  <label for="checkbox" class="toggle">
+    <input type="checkbox" class="checkbox" id="checkbox" />
+    <div class="slider">
+      <div class="moon"></div>
+      <div class="sun"></div>
+    </div>
+  </label>
+  
+  <div class="topel topel-right">
+    <input type="color" id="themeSelector" name="Theme" value="#FFFB1D" />
+  </div>
+
+  
+  <div class="topel topel-right" title="Compile - CTRL+Enter" onclick="documentUpdate(editor, 'output');">
+    <img class="icon" src="./images/reset-left-line.png"></img>
+  </div>
+</div>
+
+
+
+<div class="wrapper">
+  <div class="box">
+    <div id="editor"># Hello</div>
+  </div>
+  <div class="handler">
+    <div class=dragbuttons>
+      <div class="dragbutton" onclick="viewOutput()">
+        <img src="./images/arrow-left-circle-fill.png"></img>
+      </div>
+      <div class="dragbutton" onclick="viewEditor()">
+        <img src="./images/arrow-right-circle-fill.png"></img>
+      </div>
+      <div class="dragbutton" onclick="viewCenter()">
+        <img src="./images/collapse-horizontal-line.png"></img>
+      </div>
+    </div>
+    <div class=dragbar></div>
+  </div>
+  <div class="box" id="right"><div id="output"></div></div>
+</div>
+
+<div id="customCommandWindow">
+    <h2>Custom LaTeX Commands</h2><button id="closeButton">Close</button>
+    <div class="table-container">
+    <table id="objectTable">
+        <thead>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    </div>
+    <div class="controls">
+        <input type="text" id="newKey" placeholder="New Key">
+        <input type="text" id="newValue" placeholder="New Value">
+        <button id="addButton">Add</button>
+    </div>
+</div>
+
+</body>
+</html>

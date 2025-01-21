@@ -40,12 +40,7 @@ function renderTable() {
 		const actionCell = document.createElement("td");
 		const deleteButton = document.createElement("button");
 		deleteButton.textContent = "Delete";
-		deleteButton.style.backgroundColor = "#ff4d4d";
-		deleteButton.style.color = "white";
-		deleteButton.style.border = "none";
-		deleteButton.style.padding = "5px 10px";
-		deleteButton.style.cursor = "pointer";
-		deleteButton.style.borderRadius = "5px";
+        deleteButton.className = "deleteButton";
 		deleteButton.addEventListener("click", () => {
 			delete katexMacros[key]; // Delete the key from the object
 			renderTable(); // Re-render the table

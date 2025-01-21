@@ -1,6 +1,34 @@
 var editor = ace.edit("editor");
 editor.getSession().setUseWorker(false);
-editor.setTheme("ace/theme/solarized_dark");
+
+function changeColorTheme(theme) {
+    body.className = theme;
+    colorScheme = theme;
+    if(theme == "light-mode") {
+        editor.setTheme("ace/theme/iplastic");
+        lightDarkToggle.checked = true;
+    } else {
+        editor.setTheme("ace/theme/solarized_dark");
+        lightDarkToggle.checked = false;
+    }
+}
+
+changeColorTheme(colorScheme);
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+    const newTheme = (event.matches ? "dark" : "light") + '-mode';
+    
+    changeColorTheme(newTheme);
+});
+
+checkbox.addEventListener('click', function () {
+    if(lightDarkToggle.checked) {
+        changeColorTheme('light-mode');
+    } else {
+        changeColorTheme('dark-mode');
+    }
+});
+
 editor.session.setMode("ace/mode/markdown");
 editor.setOptions({
     wrap: true,
