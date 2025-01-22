@@ -19,6 +19,7 @@
   --table-border-color: #0E0E0E;
   
   --navbar-background-color: #484b6a;
+  --dragbar-background-color: #6F76B8;
   
   /*boolean*/
   --navbar-icon-white: 1;
@@ -30,6 +31,11 @@
   
   /*list bullet colors*/
   --list-bullet-color: #fffffff;
+  
+  /*scrollbar-color*/
+  --scrollbar-track: #EEEEEE;
+  --scrollbar-thumb: #AAAAAA;
+  --scrollbar-hover: #5F5F5F;
 }
 
 /* Define root variables for dark mode */
@@ -50,6 +56,7 @@
   --table-border-color: #504E4E;
   
   --navbar-background-color: #333333;
+  --dragbar-background-color: #5E5E5E;
   
   /*boolean*/
   --navbar-icon-white: 1;
@@ -60,6 +67,36 @@
   
   /*list bullet colors*/
   --list-bullet-color: var(--theme-color);
+  
+  /*scrollbar-color*/
+  --scrollbar-track: #002B36;
+  --scrollbar-thumb: #AAAAAA;
+  --scrollbar-hover: #5F5F5F;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 14px;
+}
+
+/* Track */
+-webkit-scrollbar-track { 
+  background: rgba(0,0,0,0);
+}
+ 
+::-webkit-scrollbar-thumb {
+  border: 4px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  border-radius: 9999px;
+  background-color: var(--scrollbar-thumb);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  border: 4px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  border-radius: 9999px;
+  background-color: var(--scrollbar-hover); 
 }
 
 /* General Layout and Reset */
@@ -68,16 +105,6 @@ html, body {
   height: 100%;
   overflow: hidden;
 }
-
-#themeSelector {
-  background: var(--background-color);
-  border: 1px solid var(--background-color);
-}
-
-#themeSelector {
-  border: none;
-}
-
 
 /* Editor Styles */
 #editor {
@@ -224,7 +251,7 @@ html, body {
 /* Handler (Resizable Divider) */
 .handler {
   width: 15px;
-  background: var(--navbar-background-color);
+  background: var(--dragbar-background-color);
   padding: 0;
   cursor: ew-resize;
   flex: 0 0 auto;
@@ -234,7 +261,7 @@ html, body {
   display: block;
   width: 15px;
   height: 100%;
-  background: var(--navbar-background-color);
+  background: var(--dragbar-background-color);
   margin: 0 auto;
 }
 
@@ -255,7 +282,7 @@ html, body {
   top: 30%;
   width: 50px;
   transform: translateX(-4px);
-  z-index: 1;
+  z-index: 100;
 }
 
 .dragbutton {
@@ -320,10 +347,24 @@ html, body {
   float: right;
 }
 
-.navbar .topel:hover {
+.topel:hover {
   background: var(--theme-color);
   color: black;
   cursor: pointer;
+}
+
+#themeSelector {
+  background: var(--background-color);
+  border: 1px solid var(--background-color);
+}
+
+#themeSelector {
+  border: none;
+}
+
+.navbar .themeSelectorContainer {
+  float: right;
+  padding: 13px 5px;
 }
 
 .navbar .logo {
@@ -465,6 +506,18 @@ html, body {
   height: calc(100% - 100px); /* Leave space for controls */
   overflow-y: auto; /* Add vertical scrolling */
   margin-bottom: 10px;
+}
+
+#customCommandWindow th {
+  position: sticky;
+  top:0;
+  z-index: 100;
+  border: 1px solid var(--table-border-color);
+}
+
+#customCommandWindow table {
+  border-collapse: separate; /* Don't collapse */
+  border-spacing: 0;
 }
 
 /* Print Styles */
