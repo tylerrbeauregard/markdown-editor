@@ -12,44 +12,58 @@ const mathCache = new Map();
 function parseMarkdown(markdown) {
     // Escape-symbol dollar-signs
 	markdown = markdown.replace(/\\\$/g, "@@DOLLARSIGN@@");
-	
+
 	// Escape code blocks
     const codeBlocks = [];
     markdown = markdown.replace(/```(\w*)\n([\s\S]*?)```/g, (_, language, code) => {
         codeBlocks.push({ language, code });
         return `@@CODE${codeBlocks.length - 1}@@`; // Temporary placeholder
     });
-    
+
     // Escape inline code
     const inLineCodeBlocks = [];
     markdown = markdown.replace(/`(.+?)`/g, (_, code) => {
         inLineCodeBlocks.push(code);
         return `@@INLINE${inLineCodeBlocks.length - 1}@@`; // Temporary placeholder
     });
-	
+
+    // Escape graphs
+    const graphBlocks = [];
+    markdown = markdown.replace(/\\begin{graph}(?:\[size=(\d*)\]){0,1}\n([\s\S]*?)\\end{graph}/g, (_, size, code) => {
+        if (isNaN(size)) {size = '300';}
+        code = code.replaceAll("'", "\"");
+        graphBlocks.push(`<div class="graph"><embed width="${size}" height="${size}" src="d.svg" script='${code}'/></div>`);
+        return `@@GRAPH${graphBlocks.length - 1}@@`;
+    });
+
     // Escape math sections
     const mathSections = [];
     markdown = markdown.replace(/(\$\$.*?\$\$|\$[^\n]*?\$|\\\[.*?\\\]|\\\(.*?\\\))/gms, (match) => {
         mathSections.push(match);
         return `@@MATH${mathSections.length - 1}@@`; // Temporary placeholder
     });
-    
-    
+
+
+    // LaTeX style quotes
+    markdown = markdown.replace(/(?<!`)``(?!`)/gs, "\u201c"); //`` for opening doubles
+    markdown = markdown.replace(/''/gs, "\u201d"); //'' for closing doubles
+
+
     // Quotes and em-dashes
     markdown = markdown.replace(/(^|[-\u2014\s(\["])'/g, "$1\u2018");       // opening singles
     markdown = markdown.replace(/'/g, "\u2019");                            // closing singles & apostrophes
-    markdown = markdown.replace(/(^|[-\u2014/\[(\u2018\s])"/g, "$1\u201c"); // opening doubles
-    markdown = markdown.replace(/"/g, "\u201d");                            // closing doubles
-    markdown = markdown.replace(/ -- /g, " \u2014 "); 
+    // markdown = markdown.replace(/(^|[-\u2014/\[(\u2018\s])"/g, "$1\u201c"); // opening doubles
+    // markdown = markdown.replace(/"/g, "\u201d");                            // closing doubles
+    markdown = markdown.replace(/ -- /g, " \u2014 ");
 
     // Convert headings
-    markdown = markdown.replace(/^(#+) (.*)$\n{0,1}/gim, 
+    markdown = markdown.replace(/^(#+) (.*)$\n{0,1}/gim,
 		(match, hashtags,content) => {
 			const level = Math.min(hashtags.length, 6);
 			return `<h${level}>${content}</h${level}>`;
 		}
 	);
-   
+
 	// Tables
 	{
 		// Convert Markdown tables to HTML with alignment support
@@ -90,13 +104,13 @@ function parseMarkdown(markdown) {
 
     // Convert underlined text
     markdown = markdown.replace(/__(.*?)__/gim, '<u>$1</u>');
-    
+
     // Convert strikethrough text
     markdown = markdown.replace(/~~(.*?)~~/gim, '<s>$1</s>');
-    
+
     // Horizontal rule
     markdown = markdown.replace(/^----* *$/gm, '<hr></hr>');
-    
+
     // Highlight
     markdown = markdown.replace(/==(?:\[(.*?)\])?(.*?)==/g, (match, color, text) => {
 		if (color) {
@@ -104,7 +118,7 @@ function parseMarkdown(markdown) {
 		} else {
 			return `<span class="highlight">${text}</span>`;
     }});
-    
+
     // Text-color
     markdown = markdown.replace(/(?<!\<\!)--(?:\[(.*?)\])?(.*?)--/g, (match, color, text) => {
 		if (color) {
@@ -115,7 +129,7 @@ function parseMarkdown(markdown) {
 
     // Replaces \qed with a qed symbol
     markdown = markdown.replace(/\\qed/g, "<div class='qed'>&#8718;</div>");
-	
+
 	// Unordered lists with indentation
 	{
 		markdown = markdown.replace(/^( *)([-*] .*)$/gm, (match, indent, content) => {
@@ -201,28 +215,28 @@ function parseMarkdown(markdown) {
             if(options === undefined){
                 return `<img src="${src}" alt="${alt}"></img>`;
             }
-            
+
             if(options.includes('float')) {
                 return `<img src="${src}" alt="${alt}" style="${options}"></img>`;
             }
-            
+
             if(options.includes('right')) {
                 return `<div style="width:'100%'; text-align: right;"><img src="${src}" alt="${alt}"></img></div>`;
             } else if(options.includes('center')) {
                 return `<div style="width:'100%'; text-align: center;"><img src="${src}" alt="${alt}"></img></div>`;
             }
-            
+
             return `<img src="${src}" alt="${alt}"></img>`;
         }
     );
     // Convert links
     markdown = markdown.replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2">$1</a>');
-    
+
     // Block qoutes
     markdown = markdown.replace(/^>[ \t]*\n{0,1}([\S]+[\s\S]*?)\n$/gm, '<blockquote>$1</blockquote>');
     markdown = markdown.replace(/^>[ \t]*\n{0,1}(.*)/g, '<blockquote>$1</blockquote>');
-    
-    
+
+
     // Convert double newlines to paragraphs
     markdown = markdown.replace(/\n\n+/g, '</br></br>');
     // Convert more than 2 space + newlines to breaks
@@ -233,15 +247,20 @@ function parseMarkdown(markdown) {
 
     // Remove extra line breaks
     markdown = markdown.replace(/\n$/gim, '');
-    
+
     // Restore inline code
     markdown = markdown.replace(/@@INLINE(\d+)@@/g, (_, index) => {
 		const codeExpression = escapeHTML(inLineCodeBlocks[parseInt(index)]);
 		return `<code>${codeExpression}</code>`;
 	});
-	
+
     // Restore dollar-signs
 	markdown = markdown.replace(/@@DOLLARSIGN@@/g, "$");
+
+    // Render and restore graphs
+     markdown = markdown.replace(/@@GRAPH(\d+)@@/g, (_, index) => {
+		return graphBlocks[index];
+	});
 
 	// Render and restore math sections
     markdown = markdown.replace(/@@MATH(\d+)@@/g, (_, index) => {
@@ -252,7 +271,7 @@ function parseMarkdown(markdown) {
         if (mathCache.has(mathExpression)) {
             return mathCache.get(mathExpression);
         }
-        
+
 
         // Render math expression
         let renderedMath;
@@ -280,13 +299,13 @@ function parseMarkdown(markdown) {
         mathCache.set(mathExpression, renderedMath);
         return renderedMath;
     });
-    
+
     // Clear out old code blocks
     for (var i = 0; i < tempEditors.length; i++){
 		tempEditors[i].destroy();
 		tempEditors[i].container.remove();
 	}
-    
+
 	tempEditors = [];
     // Restore code blocks
     numberOfTempEditors = 0;
@@ -298,7 +317,7 @@ function parseMarkdown(markdown) {
         if(code.endsWith("\n")){code = code.slice(0,-1)}
         return `<div id='code-block-${numberOfTempEditors-1}' class='code-block-output'">${code}</div>`;
     });
-    
+
     return markdown.trim();
 }
 
@@ -325,12 +344,13 @@ function createTempEditor(idNumber, language) {
 	tempEditor.setOptions({
         readOnly: true,
         highlightActiveLine: false,
-        highlightGutterLine: false
+				highlightGutterLine: false,
+				fontSize: "14pt"
     });
 	tempEditor.renderer.$cursorLayer.element.style.display = "none";
 	var editorHeight = tempEditor.session.getLength();
-	var lineHeight = 14;
-	document.getElementById(id.toString()).style.height = editorHeight*lineHeight+20+'pt';
-    tempEditor.renderer.setScrollMargin(13,0);
+	var lineHeight = 16;
+	document.getElementById(id.toString()).style.height = (editorHeight*lineHeight+20)+'pt';
+		tempEditor.renderer.setScrollMargin(14,0);
 	tempEditors[idNumber] = tempEditor;
 }

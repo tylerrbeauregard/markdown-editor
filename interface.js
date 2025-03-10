@@ -62,12 +62,17 @@ document.addEventListener('mousemove', function(e) {
   // Arbitrary minimum width set on box A, otherwise its inner content will collapse to width of 0
   var leftBoxminWidth = 0;
 
-  // Resize box A
+  // Resize editor box
   // * 8px is the left/right spacing between .handler and its inner pseudo-element
   // * Set flex-grow to 0 to prevent it from growing
   leftBox.style.width = (Math.max(leftBoxminWidth, pointerRelativeXpos - 8)) + 'px';
   leftBox.style.flexGrow = 0;
   leftBox.style.flexShrink = 0;
+
+  // Trying to avoid right-side overflow!
+  rightBox.style.width = (
+    window.innerWidth
+    - (Math.max(leftBoxminWidth, pointerRelativeXpos + 15))) + 'px';
 });
 
 document.addEventListener('mouseup', function(e) {

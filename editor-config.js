@@ -174,6 +174,14 @@ function bold(editor) {
 	selectionRange = editor.getSelectionRange();
 	editor.session.insert(selectionRange.end, "**");
 	editor.session.insert(selectionRange.start, "**");
+    // Fix the selection
+    selectionRange = editor.getSelectionRange();
+    editor.selection.setRange(
+      new ace.Range(
+        selectionRange.start.row,
+        selectionRange.start.column,
+        selectionRange.end.row,
+        selectionRange.end.column - 2));
 }
 function italicize(editor) {
 	// If there is no selection
@@ -189,6 +197,13 @@ function italicize(editor) {
 	selectionRange = editor.getSelectionRange();
 	editor.session.insert(selectionRange.end, "*");
 	editor.session.insert(selectionRange.start, "*");
+    selectionRange = editor.getSelectionRange();
+    editor.selection.setRange(
+      new ace.Range(
+        selectionRange.start.row,
+        selectionRange.start.column,
+        selectionRange.end.row,
+        selectionRange.end.column - 1));
 }
 function underline(editor) {
 	// If there is no selection
@@ -204,6 +219,13 @@ function underline(editor) {
 	selectionRange = editor.getSelectionRange();
 	editor.session.insert(selectionRange.end, "__");
 	editor.session.insert(selectionRange.start, "__");
+    selectionRange = editor.getSelectionRange();
+    editor.selection.setRange(
+      new ace.Range(
+        selectionRange.start.row,
+        selectionRange.start.column,
+        selectionRange.end.row,
+        selectionRange.end.column - 2));
 }
 function strikethrough(editor) {
 	// If there is no selection
@@ -219,6 +241,13 @@ function strikethrough(editor) {
 	selectionRange = editor.getSelectionRange();
 	editor.session.insert(selectionRange.end, "~~");
 	editor.session.insert(selectionRange.start, "~~");
+    selectionRange = editor.getSelectionRange();
+    editor.selection.setRange(
+      new ace.Range(
+        selectionRange.start.row,
+        selectionRange.start.column,
+        selectionRange.end.row,
+        selectionRange.end.column - 2));
 }
 function link(editor) {
     // If there is no selection
@@ -237,6 +266,7 @@ function link(editor) {
     editor.moveCursorToPosition({
             row: selectionRange.end.row,
             column: selectionRange.end.column + 3});
+    editor.selection.clearSelection()
 }
 function inlineMath(editor) {
     // If there is no selection
@@ -252,6 +282,13 @@ function inlineMath(editor) {
 	selectionRange = editor.getSelectionRange();
 	editor.session.insert(selectionRange.end, "$");
 	editor.session.insert(selectionRange.start, "$");
+    selectionRange = editor.getSelectionRange();
+    editor.selection.setRange(
+      new ace.Range(
+        selectionRange.start.row,
+        selectionRange.start.column,
+        selectionRange.end.row,
+        selectionRange.end.column - 1));
 }
 // This allows us to highlight a selection, press dollar sign and
 // wrap it. If nothing is selected, we just type a single $
@@ -260,15 +297,19 @@ function dollarSignOverload(editor) {
 	if( editor.selection.isEmpty() ){
 		var editorPosition = editor.getCursorPosition();
 		editor.session.insert(editorPosition, "$");
-		editor.moveCursorToPosition({
-            row: editor.getCursorPosition().row,
-            column: editor.getCursorPosition().column + 1})
 		return;
 	}
 	// Otherwise there is 
 	selectionRange = editor.getSelectionRange();
 	editor.session.insert(selectionRange.end, "$");
 	editor.session.insert(selectionRange.start, "$");
+    selectionRange = editor.getSelectionRange();
+    editor.selection.setRange(
+      new ace.Range(
+        selectionRange.start.row,
+        selectionRange.start.column,
+        selectionRange.end.row,
+        selectionRange.end.column - 1));
 }
 function codeBlock(editor) {
     // If there is no selection
@@ -287,6 +328,13 @@ function codeBlock(editor) {
     editor.moveCursorToPosition({
             row: selectionRange.end.row+3,
             column: 0});
+    selectionRange = editor.getSelectionRange();
+    editor.selection.setRange(
+      new ace.Range(
+        selectionRange.start.row,
+        selectionRange.start.column,
+        selectionRange.end.row-1,
+        selectionRange.end.column));
 }
 function addImage(editor) {
     // If there is no selection

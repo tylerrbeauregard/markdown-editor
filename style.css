@@ -6,11 +6,11 @@
   --background-color: #ffffff;
   --text-color: #000000;
   
-  /*links*/
-  --link-unvisited: #809fff;
-  --link-visited: #809fff;
-  --link-hover: #809fff;
-  --link-active: #809fff;
+  /*links (standard HTML colors)*/
+  --link-unvisited: #0000EE;
+  --link-visited: #551A8B;
+  --link-hover: #FF0000;
+  --link-active: #FF0000;
   
   /*inline-code*/
   --inline-code-background-color: #478494;
@@ -224,6 +224,11 @@ html, body {
   font-size: 20pt;
   text-align: right;
   color: var(--theme-color);
+}
+
+#output .graph {
+  width: 100%;
+  text-align: center;
 }
 
 #output img, image {
@@ -528,6 +533,15 @@ html, body {
   border-spacing: 0;
 }
 
+/* KaTeX stuff */
+.katex-display { overflow: auto hidden;}
+.katex { font-size: 1em; }
+
+/* Hoping this fixes an error whereby underscores aren't shown in certain resolutions */
+.ace_content {
+    line-height: 1;
+}
+
 /* Print Styles */
 @media print {
   .navbar {
@@ -577,5 +591,10 @@ html, body {
 		overflow: auto;
 		color: black;
 		background-color: white;
-	}	
+        quotes: initial;
+	}
+
+	/* KaTeX stuff */
+    /* in print mode, no scroll-bars!*/
+    .katex-display { overflow: hidden }
 }
