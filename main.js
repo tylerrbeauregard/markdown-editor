@@ -11,6 +11,9 @@ function documentUpdate(aceEditor, outputId) {
 	for(var idNumber=0; idNumber<numberOfTempEditors; idNumber++) {
 		createTempEditor(idNumber, tempEditors[idNumber]);
 	}
+    
+    // draw graphs
+    drawPictures()
 	
 	// Set local storage
 	localStorage.setItem("editorContent", markdown);

@@ -2,21 +2,23 @@
 <html>
 <head>
   <title>Tyler's Editor</title>
-  
+
   <link rel="icon" href="images/favicon.png" sizes="any" type="image/png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
 
   <script src="https://ajaxorg.github.io/ace-builds/src-noconflict/ace.js"></script>
-  
+
+  <script src="ASCIIsvg.js"></script>
+
   <script src="interface.js" defer></script>
   <script src="editor-config.js" defer></script>
   <script src="parser.js" defer></script>
   <script src="custom-commands.js" defer></script>
   <script src="main.js" defer></script>
-  <link rel="stylesheet" href = "./Fonts/Serif/cmun-serif.css" type="text/css" />
-  <link rel="stylesheet" href="style.css"> 
-  <link rel="stylesheet" href="toggle.css"
+  <link rel="stylesheet" href = "./fonts/Serif/cmun-serif.css" type="text/css" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="toggle.css">
 </head>
 
 <body class="dark-mode">
@@ -60,11 +62,11 @@
   <div class="topel topel-left" title="Image" onclick="addImage(editor);">
     <img class="icon" src="./images/image-add-line.png"></img>
   </div>
-  
+
   <div class="topel topel-right", onclick="printDiv('output');" title="Print">
     <img class="icon" src="./images/printer-fill.png"></img>
   </div>
-  
+
   <label for="checkbox" class="toggle">
     <input type="checkbox" class="checkbox" id="checkbox" />
     <div class="slider">
@@ -72,12 +74,12 @@
       <div class="sun"></div>
     </div>
   </label>
-  
+
   <div class="themeSelectorContainer">
     <input type="color" id="themeSelector" name="Theme" value="#FFFB1D" />
   </div>
 
-  
+
   <div class="topel topel-right" title="Compile - CTRL+Enter" onclick="documentUpdate(editor, 'output');">
     <img class="icon" src="./images/reset-left-line.png"></img>
   </div>
