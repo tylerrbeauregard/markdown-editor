@@ -10,6 +10,21 @@ function documentUpdate(aceEditor, outputId) {
 	// Creates temp-editors
 	for(var idNumber=0; idNumber<numberOfTempEditors; idNumber++) {
 		createTempEditor(idNumber, tempEditors[idNumber]);
+		const copyButton = document.createElement("button");
+		copyButton.textContent = "Copy";
+		copyButton.id = "copy" + idNumber;
+		copyButton.addEventListener("click", (e) => {
+			var copyId = parseInt(e.target.id.slice(4));
+			navigator.clipboard.writeText(tempEditors[copyId].getValue()).then(() => {
+			copyButton.textContent = "Copied!";
+			setTimeout(() => copyButton.textContent = "Copy", 1500);
+		}).catch(err => {
+			console.error("Copy failed:", err);
+		});
+		});
+
+		tempEditors[idNumber].container.appendChild(copyButton);
+		copyButton.classList.add( "copy-button");
 	}
     
     // draw graphs
