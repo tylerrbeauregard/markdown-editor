@@ -542,6 +542,25 @@ html, body {
     line-height: 1;
 }
 
+.copy-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+
+  .copy-button:hover {
+    opacity: 1;
+  }
+
 /* Print Styles */
 @media print {
   .navbar {
@@ -564,37 +583,42 @@ html, body {
     height: auto;
   }
 
-	.handler {
-		display: none;
-		visibility: hidden;
-	}
+    .handler {
+        display: none;
+        visibility: hidden;
+    }
 
-	.dragbar {
-		display: none;
-		visibility: hidden;
-	}
-	
-	.box {
-		box-sizing: border-box;
-		flex: 1 1 auto; /* Flexible and equally sized */
-		background-color: white;
-		color: #aaa;
-		padding: 0;
-	}
-	
-	#output {
-		font-size: 12pt;
-		font-family: "Computer Modern Serif", serif;
-		position: relative;
-		height: 100%;
-		padding: 1cm 10%;
-		overflow: auto;
-		color: black;
-		background-color: white;
+    .dragbar {
+        display: none;
+        visibility: hidden;
+    }
+
+    .box {
+        box-sizing: border-box;
+        flex: 1 1 auto; /* Flexible and equally sized */
+        background-color: white;
+        color: #aaa;
+        padding: 0;
+    }
+
+    ,copy-button {
+        display: none;
+        visibility: hidden;
+    }
+
+    #output {
+        font-size: 12pt;
+        font-family: "Computer Modern Serif", serif;
+        position: relative;
+        height: 100%;
+        padding: 1cm 10%;
+        overflow: auto;
+        color: black;
+        background-color: white;
         quotes: initial;
-	}
+    }
 
-	/* KaTeX stuff */
+    /* KaTeX stuff */
     /* in print mode, no scroll-bars!*/
     .katex-display { overflow: hidden }
 }
