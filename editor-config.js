@@ -161,6 +161,8 @@ editor.commands.addCommand({ // math 3
 });
 
 function bold(editor) {
+    // Return focus to the editor
+    editor.focus()
 	// If there is no selection
 	if( editor.selection.isEmpty() ){
 		var editorPosition = editor.getCursorPosition();
@@ -171,11 +173,54 @@ function bold(editor) {
 		return;
 	}
 	// Otherwise there is 
-	selectionRange = editor.getSelectionRange();
+	var selectionRange = editor.getSelectionRange();
+
+    // Check if section is already bolded
+    var selectedText = editor.session.getTextRange(selectionRange);
+    if( selectedText.startsWith("**") && selectedText.endsWith("**") && selectedText.length >= 4){
+      var endTextRange = new ace.Range(
+        selectionRange.end.row,
+        selectionRange.end.column-2,
+        selectionRange.end.row,
+        selectionRange.end.column);
+      editor.session.remove(endTextRange);
+
+      var startTextRange = new ace.Range(
+        selectionRange.start.row,
+        selectionRange.start.column,
+        selectionRange.start.row,
+        selectionRange.start.column+2);
+      editor.session.remove(startTextRange);
+      return
+    }
+    // Also need to check outside of selection
+    var lineLength = editor.session.getLine(selectionRange.end.row).length;
+    // If there's room for the double asterisk
+    if( selectionRange.start.column >= 2 && lineLength >= selectionRange.end.column + 2) {
+      var startTextRange = new ace.Range(
+        selectionRange.start.row,
+        selectionRange.start.column-2,
+        selectionRange.start.row,
+        selectionRange.start.column);
+
+      var endTextRange = new ace.Range(
+        selectionRange.end.row,
+        selectionRange.end.column,
+        selectionRange.end.row,
+        selectionRange.end.column+2);
+
+      if(editor.session.getTextRange(startTextRange) == "**"
+        && editor.session.getTextRange(endTextRange) == "**") {
+          editor.session.remove(endTextRange);
+          editor.session.remove(startTextRange);
+          return
+        }
+    }
+
 	editor.session.insert(selectionRange.end, "**");
 	editor.session.insert(selectionRange.start, "**");
     // Fix the selection
-    selectionRange = editor.getSelectionRange();
+    var selectionRange = editor.getSelectionRange();
     editor.selection.setRange(
       new ace.Range(
         selectionRange.start.row,
@@ -184,6 +229,8 @@ function bold(editor) {
         selectionRange.end.column - 2));
 }
 function italicize(editor) {
+    // Return focus to the editor
+    editor.focus()
 	// If there is no selection
 	if( editor.selection.isEmpty() ){
 		var editorPosition = editor.getCursorPosition();
@@ -206,6 +253,8 @@ function italicize(editor) {
         selectionRange.end.column - 1));
 }
 function underline(editor) {
+    // Return focus to the editor
+    editor.focus()
 	// If there is no selection
 	if( editor.selection.isEmpty() ){
 		var editorPosition = editor.getCursorPosition();
@@ -228,6 +277,8 @@ function underline(editor) {
         selectionRange.end.column - 2));
 }
 function strikethrough(editor) {
+    // Return focus to the editor
+    editor.focus()
 	// If there is no selection
 	if( editor.selection.isEmpty() ){
 		var editorPosition = editor.getCursorPosition();
@@ -250,6 +301,8 @@ function strikethrough(editor) {
         selectionRange.end.column - 2));
 }
 function link(editor) {
+    // Return focus to the editor
+    editor.focus()
     // If there is no selection
 	if( editor.selection.isEmpty() ){
 		var editorPosition = editor.getCursorPosition();
@@ -269,6 +322,8 @@ function link(editor) {
     editor.selection.clearSelection()
 }
 function inlineMath(editor) {
+    // Return focus to the editor
+    editor.focus()
     // If there is no selection
 	if( editor.selection.isEmpty() ){
 		var editorPosition = editor.getCursorPosition();
@@ -293,6 +348,8 @@ function inlineMath(editor) {
 // This allows us to highlight a selection, press dollar sign and
 // wrap it. If nothing is selected, we just type a single $
 function dollarSignOverload(editor) {
+    // Return focus to the editor
+    editor.focus()
 	// If there is no selection
 	if( editor.selection.isEmpty() ){
 		var editorPosition = editor.getCursorPosition();
@@ -312,6 +369,8 @@ function dollarSignOverload(editor) {
         selectionRange.end.column - 1));
 }
 function codeBlock(editor) {
+    // Return focus to the editor
+    editor.focus()
     // If there is no selection
 	if( editor.selection.isEmpty() ){
 		var editorPosition = editor.getCursorPosition();
@@ -337,6 +396,8 @@ function codeBlock(editor) {
         selectionRange.end.column));
 }
 function addImage(editor) {
+    // Return focus to the editor
+    editor.focus()
     // If there is no selection
 	if( editor.selection.isEmpty() ){
 		var editorPosition = editor.getCursorPosition();
