@@ -348,9 +348,33 @@ function createTempEditor(idNumber, language) {
 				fontSize: "14pt"
     });
 	tempEditor.renderer.$cursorLayer.element.style.display = "none";
-	var editorHeight = tempEditor.session.getLength();
-	var lineHeight = 16;
-	document.getElementById(id.toString()).style.height = (editorHeight*lineHeight+20)+'pt';
-		tempEditor.renderer.setScrollMargin(14,0);
+	// var editorHeight = tempEditor.session.getLength();
+	// var lineHeight = 16;
+	// document.getElementById(id.toString()).style.height = (editorHeight*lineHeight+20)+'pt';
+
+    const margin = 10
+	tempEditor.renderer.setScrollMargin(margin,0);
+    const newHeight = 2 * margin + tempEditor.getSession().getScreenLength() *
+        (tempEditor.renderer.lineHeight + tempEditor.renderer.scrollBar.getWidth());
+       tempEditor.container.style.height = `${newHeight}px`;
+    tempEditor.resize();
 	tempEditors[idNumber] = tempEditor;
+
+
+    const copyButton = document.createElement("button");
+    copyButton.className = "copy-button";
+    copyButton.textContent = "Copy";
+    copyButton.style.position = "absolute";
+    copyButton.style.top = "8px";
+    copyButton.style.right = "8px";
+    copyButton.style.padding = "4px 8px";
+    copyButton.style.fontSize = "12px";
+    copyButton.style.cursor = "pointer";
+    copyButton.style.backgroundColor = "#007bff";
+    copyButton.style.color = "#fff";
+    copyButton.style.border = "none";
+    copyButton.style.borderRadius = "4px";
+    copyButton.style.opacity = "0.8";
+
+    tempEditor.container.appendChild(copyButton);
 }
