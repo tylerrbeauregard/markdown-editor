@@ -7,9 +7,11 @@ function changeColorTheme(theme) {
     if(theme == "light-mode") {
         editor.setTheme("ace/theme/iplastic");
         lightDarkToggle.checked = true;
+        output.classList.remove('latex-dark');
     } else {
         editor.setTheme("ace/theme/solarized_dark");
         lightDarkToggle.checked = false;
+        output.classList.add('latex-dark');
     }
 }
 
@@ -258,23 +260,23 @@ function underline(editor) {
 	// If there is no selection
 	if( editor.selection.isEmpty() ){
 		var editorPosition = editor.getCursorPosition();
-		editor.session.insert(editorPosition, "____");
+		editor.session.insert(editorPosition, "<u></u>");
         editor.moveCursorToPosition({
             row: editor.getCursorPosition().row,
-            column: editor.getCursorPosition().column - 2})
+            column: editor.getCursorPosition().column - 4})
 		return;
 	}
 	// Otherwise there is 
 	selectionRange = editor.getSelectionRange();
-	editor.session.insert(selectionRange.end, "__");
-	editor.session.insert(selectionRange.start, "__");
+	editor.session.insert(selectionRange.end, "</u>");
+	editor.session.insert(selectionRange.start, "<u>");
     selectionRange = editor.getSelectionRange();
     editor.selection.setRange(
       new ace.Range(
         selectionRange.start.row,
         selectionRange.start.column,
         selectionRange.end.row,
-        selectionRange.end.column - 2));
+        selectionRange.end.column - 4));
 }
 function strikethrough(editor) {
     // Return focus to the editor
