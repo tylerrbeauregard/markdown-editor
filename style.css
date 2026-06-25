@@ -5,16 +5,7 @@
 .light-mode {
   --background-color: #ffffff;
   --text-color: #000000;
-  
-  /*links (standard HTML colors)*/
-  --link-unvisited: #0000EE;
-  --link-visited: #551A8B;
-  --link-hover: #FF0000;
-  --link-active: #FF0000;
-  
-  /*inline-code*/
-  --inline-code-background-color: #478494;
-  
+
   --table-heading-background-color: #9394a5;
   --table-border-color: #0E0E0E;
   
@@ -42,15 +33,6 @@
 .dark-mode {
   --background-color: #121212;
   --text-color: #ffffff;
-
-  /*links*/
-  --link-unvisited: #809fff;
-  --link-visited: #809fff;
-  --link-hover: #DD2CFF;
-  --link-active: #809fff;
-  
-  /*inline-code*/
-  --inline-code-background-color: #002B36;
   
   --table-heading-background-color: #1C1C1C;
   --table-border-color: #504E4E;
@@ -63,7 +45,7 @@
   --navbar-icon-hover-white: 0;
   
   --command-window-text: #cccccc;
-  --command-window-background: #222222;
+  --command-window-background: #333333;
   
   /*list bullet colors*/
   --list-bullet-color: var(--theme-color);
@@ -115,14 +97,6 @@ html, body {
   overflow: hidden;
 }
 
-.code-block-output {
-  font-size: 14pt;
-  position: relative;
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
-}
-
 /* Output Styles */
 #output {
   font-size: 16pt;
@@ -138,102 +112,21 @@ html, body {
   background: var(--background-color);
 }
 
-/* unvisited link */
-#output a:link {
-  color: var(--link-unvisited);
+#output summary {
+  cursor: pointer;
 }
 
-/* visited link */
-#output a:visited {
-  color: var(--link-visited);
-}
-
-/* mouse over link */
-#output a:hover {
-  color: var(--link-hover);
-}
-
-/* selected link */
-#output a:active {
-  color: var(--link-active);
-}
-
-#output h1 {
+#output mark {
   background: var(--theme-color);
-  color: black;
-  padding-left: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
   border-radius: 5px;
-  text-align: left;
-}
-
-
-#output ol, ul {
-  margin: 0pt;
-}
-
-#output li::marker, ul::marker {
-  color: var(--list-bullet-color);
-}
-
-#output hr {
-  color: var(--theme-color);
-  background-color: var(--theme-color);
-  border-color: var(--theme-color);
 }
 
 #output blockquote {
-  margin-top: 10px;
-  margin-bottom: 10px;
   margin-left: 2px;
   padding-left: 30px;
   border-left: 5px solid var(--theme-color);
-}
-
-/* Used only for inline code */
-#output code {
-  font-size: 14pt;
-  background-color: var(--inline-code-background-color);
-  padding: 1px;
-}
-
-#output .highlight {
-  background-color: var(--theme-color);
-  color: black;
-  padding-left: 2px;
-  padding-right:2px;
-  border-radius: 2px;
-}
-
-#output table {
-  border-collapse:collapse;
-  width: 100%;
-  border-radius: 5px;
-}
-#output th, td {
-  border: 1px solid var(--table-border-color);
-  padding: 8px;
-  text-align: left;
-}
-#output th {
-  background-color: var(--table-heading-background-color);
-  font-weight: bold;
-}
-
-#output .qed {
-  width: 100%;
-  font-size: 20pt;
-  text-align: right;
-  color: var(--theme-color);
-}
-
-#output .graph {
-  width: 100%;
-  text-align: center;
-}
-
-#output img, image {
-  padding: 10px;
-  max-width: 70%;
 }
 
 /* Wrapper and Box Styles */
@@ -294,10 +187,14 @@ html, body {
   position: relative;
   width: 24px;
   height: 24px;
-  background: black;
+  background: white;
   border-radius: 12px;
   margin-top: 5px;
   margin-bottom: 5px
+}
+
+.dragbutton:hover {
+  background: var(--theme-color);
 }
 
 .dragbutton img{
@@ -444,7 +341,7 @@ html, body {
 #customCommandWindow table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 
 #customCommandWindow th, #customCommandWindow td {
@@ -461,13 +358,11 @@ html, body {
   font-family: monospace;
 }
 
-/* Controls for Adding Items */
-#customCommandWindow .controls {
-  display: flex;
-  gap: 10px;
+#customCommandWindow div.controls {
+  padding: 4px;
 }
 
-#customCommandWindow .controls input {
+#customCommandWindow div.controls > input {
   flex: 1;
   padding: 8px;
   border: 1px solid #ccc;
@@ -475,7 +370,7 @@ html, body {
   font-family: Courier, monospace;
 }
 
-#customCommandWindow .controls button {
+#customCommandWindow div.controls > button {
   padding: 8px 16px;
   background-color: #007bff;
   color: white;
@@ -484,8 +379,14 @@ html, body {
   cursor: pointer;
 }
 
-#customCommandWindow .controls button:hover {
+#customCommandWindow div.controls > button:hover {
   background-color: #0056b3;
+}
+
+/* Controls for Adding Items */
+#customCommandWindow div.controls {
+  display: flex;
+  gap: 10px;
 }
 
 /* Command Window Close Button */
@@ -518,7 +419,6 @@ html, body {
 #customCommandWindow .table-container {
   height: calc(100% - 100px); /* Leave space for controls */
   overflow-y: auto; /* Add vertical scrolling */
-  margin-bottom: 10px;
 }
 
 #customCommandWindow th {
@@ -535,31 +435,17 @@ html, body {
 
 /* KaTeX stuff */
 .katex-display { overflow: auto hidden;}
-.katex { font-size: 1em; }
+.katex { font-size: 1rem; }
 
 /* Hoping this fixes an error whereby underscores aren't shown in certain resolutions */
 .ace_content {
-    line-height: 1;
+  line-height: 1;
 }
 
-.copy-button {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    padding: 4px 8px;
-    font-size: 12px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    opacity: 0.8;
-    transition: opacity 0.2s;
-  }
 
-  .copy-button:hover {
-    opacity: 1;
-  }
+#output .copy-to-clipboard-button {
+  font-family: system-ui;
+}
 
 /* Print Styles */
 @media print {
@@ -574,6 +460,12 @@ html, body {
 
   .wrapper {
     padding: 0;
+  }
+    
+  
+  #output .copy-to-clipboard-button {
+     display: none;
+     visibility: hidden;
   }
     
   .code-block-output {
@@ -616,6 +508,21 @@ html, body {
         color: black;
         background-color: white;
         quotes: initial;
+    }
+    
+    #output table {
+      border-collapse:collapse;
+      width: 100%;
+      border-radius: 5px;
+    }
+    #output th, td {
+      border: 1px solid var(--table-border-color);
+      padding: 8px;
+      text-align: left;
+    }
+    #output th {
+      background-color: var(--table-heading-background-color);
+      font-weight: bold;
     }
 
     /* KaTeX stuff */
