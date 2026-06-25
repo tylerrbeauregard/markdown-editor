@@ -5,31 +5,48 @@
 
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="toggle.css">
-
   <link rel="icon" href="images/favicon.png" sizes="any" type="image/png">
+  
+  <!-- Various libaries being used -->
+  <!-- Ajax -->
+  <script src="https://ajaxorg.github.io/ace-builds/src-noconflict/ace.js" defer></script>
+  <!-- KaTeX -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
-
-  <script src="https://ajaxorg.github.io/ace-builds/src-noconflict/ace.js"></script>
-
-  <script src="ASCIIsvg.js"></script>
-
+  <!-- Marked -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@18.0.5/lib/marked.umd.min.js"></script>
+  
+  <!-- LaTeX.css (modified) -->
+  <link rel="stylesheet" href="latex.css">
+  
+  <!-- Prism JS -->
+  <link rel="stylesheet" href="https://latex.vercel.app/prism/prism.css">
+  <script src="prism/prism.min.js" defer></script>
+  <link rel="stylesheet" href="prism/prism-toolbar.css"  />
+  <script src="prism/prism-toolbar.js" defer></script>
+  <script src="prism/prism-copy-to-clipboard.js" defer></script>
+  <script src="prism/prism-autoloader.js" defer></script>
+  
+  
+  <!-- Code made for this page -->
   <script src="interface.js" defer></script>
   <script src="editor-config.js" defer></script>
   <script src="parser.js" defer></script>
   <script src="custom-commands.js" defer></script>
   <script src="main.js" defer></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/bitmaks/cm-web-fonts@latest/fonts.css">
+  <link rel="stylesheet" href="https://lalten.github.io/lmweb/style/latinmodern-roman.css" type="text/css" charset="utf-8" />
 </head>
 
-<body class="dark-mode">
+<body class="dark-mode line-numbers">
 <div id="navbar" class="navbar">
   <a target="_blank" href="https://github.com/tylerrbeauregard/markdown-editor/">
     <img class="logo" src="images/logo.png">
   </a>
+<!--
   <div class="topel topel-left">
      <img class="icon" src="./images/menu-line.png">
   </div>
+-->
   <div class="topel topel-left" onclick="saveToFile(editor)" title="Save markdown file">
       <img class="icon" src="./images/download-line.png">
   </div>
@@ -64,7 +81,7 @@
     <img class="icon" src="./images/image-add-line.png">
   </div>
 
-  <div class="topel topel-right" onclick="printDiv('output');" title="Print">
+  <div class="topel topel-right", onclick="printDiv('output');" title="Print">
     <img class="icon" src="./images/printer-fill.png">
   </div>
 
@@ -106,9 +123,14 @@
     </div>
     <div class=dragbar></div>
   </div>
-  <div class="box" id="right"><div id="output"></div></div>
+  <div class="box" id="right">
+      <!--Here the data-prismjs stuff let's me set the copy/paste message on code blocks -->
+      <div id="output" class="line-numbers" data-prismjs-copy="&#x2BBA;" data-prismjs-copy-success="&#x2713;">
+      </div>
+  </div>
 </div>
 
+<div>
 <div id="customCommandWindow">
     <h2>Custom LaTeX Commands</h2><button id="closeButton">Close</button>
     <div class="table-container">
@@ -129,6 +151,7 @@
         <input type="text" id="newValue" placeholder="New Value">
         <button id="addButton">Add</button>
     </div>
+</div>
 </div>
 
 </body>
