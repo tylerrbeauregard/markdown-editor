@@ -500,7 +500,7 @@ html, body {
 
     #output {
         font-size: 12pt;
-        font-family: "Computer Modern Serif", serif;
+        font-family: "Latin Modern Roman", Georgia, Cambria, 'Times New Roman', Times, serif;
         position: relative;
         height: 100%;
         padding: 1cm 10%;
