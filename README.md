@@ -15,7 +15,7 @@ It supports most standard markdown, and some extended features:
  - Math (via LaTeX input)
    - Accepts inline (`$x$` or `\(x\)`) and display style (`$$x$$` or `\[x\]`)
    - Also has the benefit of allowing custom commands and shortcuts
- - Can use LaTeX style quotes `\`\`` and `''` for “ and ”
+ - Can use LaTeX style quotes ` `` ` and `''` for “ and ”
  - Code blocks with language-specific syntax highlighting.
  - Highlighting using `==highlighted thing==` or `==[color]highlighted thing==`
 
