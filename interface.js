@@ -9,6 +9,7 @@
 	var output = document.getElementById("output");
     var lightDarkToggle = document.getElementById("checkbox");
     var themeSelector = document.getElementById("themeSelector");
+    output.classList.add('latex-dark');
     
     // Global vars
 	var isHandlerDragging = false;
@@ -20,7 +21,8 @@
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
     colorScheme = "light-mode";
     body.className = colorScheme;
-    lightDarkToggle.checked = true
+    lightDarkToggle.checked = true;
+    output.classList.remove('latex-dark');
 }
 
 themeSelector.addEventListener('change', function () {
@@ -87,12 +89,9 @@ document.addEventListener('mouseup', function(e) {
 
 // Touch events
 // Listen for touchstart events
-document.addEventListener('touchstart', function(e) {
+handler.addEventListener('touchstart', function(e) {
   // If touchstart event is fired from .handler or .dragbar, toggle flag to true
-  var target = document.elementFromPoint(e.clientX, e.clientY);
-  if (target === handler || target === dragbar) {
-    isHandlerDragging = true;
-  }
+  isHandlerDragging = true;
 }, { passive: false });
 
 document.addEventListener('touchmove', function(e) {
@@ -171,14 +170,12 @@ function viewOutput() {
 }
 
 function viewEditor() {
-    // leftBox.style.width = (window.innerWidth - 15) + "px";
     leftBox.style.width = (wrapper.offsetWidth - 15) + "px";
 }
 
 function viewCenter() {
     leftBox.style.width = "50%";
 }
-
 
 function saveToFile(editor) {
 	var HTMLtextToSave = editor.getValue();
