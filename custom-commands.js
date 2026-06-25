@@ -21,6 +21,7 @@ function renderTable() {
 	tableBody.innerHTML = ""; // Clear existing rows
 	// Delete cache of pre-rendered KaTeX
 	mathCache.clear();
+    
 	for (const [key, value] of Object.entries(katexMacros)) {
 		const row = document.createElement("tr");
 
@@ -48,7 +49,7 @@ function renderTable() {
 		actionCell.appendChild(deleteButton);
 		row.appendChild(actionCell);
 
-		// Save changes on blur
+		// Save changes on blur (i.e. when the element is out of focus)
 		keyCell.addEventListener("blur", () => updateObjectKey(key, keyCell.textContent, valueCell.textContent));
 		valueCell.addEventListener("blur", () => updateObjectValue(key, valueCell.textContent));
 		
